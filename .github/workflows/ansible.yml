@@ -1,0 +1,40 @@
+name: Run Ansible
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'inventory/**'
+      - 'roles/**'
+      - 'site.yml'
+
+jobs:
+  ansible:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Ansible
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y ansible
+
+      - name: Install Ansible collections
+        run: ansible-galaxy collection install -r requirements.yml
+
+      - name: Write SSH private key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.AKSARA_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Add aksara to known_hosts
+        run: |
+          ssh-keyscan -H 62.238.100.84 >> ~/.ssh/known_hosts
+
+      - name: Run playbook
+        run: |
+          ansible-playbook -i inventory/hosts.ini site.yml

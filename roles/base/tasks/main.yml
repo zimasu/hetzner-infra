@@ -1,0 +1,22 @@
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Install base packages
+  ansible.builtin.apt:
+    name:
+      - curl
+      - wget
+      - git
+      - unzip
+      - htop
+      - vim
+    state: present
+  become: true
+
+- name: Set timezone to Europe/Berlin
+  ansible.builtin.command: timedatectl set-timezone Europe/Berlin
+  become: true
+  changed_when: true
