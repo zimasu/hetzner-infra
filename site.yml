@@ -1,0 +1,8 @@
+---
+- name: Configure k3s node
+  hosts: k3s
+  become: false
+  vars:
+    argocd_domain: argocd.zidanesyukri.me
+  roles:
+    - argocd
