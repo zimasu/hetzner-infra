@@ -8,6 +8,7 @@ on:
       - 'inventory/**'
       - 'roles/**'
       - 'site.yml'
+      - 'ansible.cfg'
 
 jobs:
   ansible:
