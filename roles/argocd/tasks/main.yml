@@ -5,7 +5,7 @@
   failed_when: ns_result.rc != 0 and 'already exists' not in ns_result.stderr
 
 - name: Apply ArgoCD install manifest
-  command: kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/install.yaml
+  command: kubectl apply --server-side --force-conflicts -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.13.3/manifests/install.yaml
 
 - name: Wait for ArgoCD server to be ready
   command: kubectl rollout status deployment/argocd-server -n argocd --timeout=120s
@@ -17,3 +17,5 @@
 
 - name: Deploy ArgoCD ingress
   command: kubectl apply -f /tmp/argocd-ingress.yml
+
+

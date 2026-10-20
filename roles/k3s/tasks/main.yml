@@ -19,20 +19,3 @@
   become: true
   changed_when: false
 
-- name: Ensure .kube directory exists for zimasu
-  ansible.builtin.file:
-    path: /home/zimasu/.kube
-    state: directory
-    owner: zimasu
-    group: zimasu
-    mode: '0755'
-
-- name: Copy kubeconfig for zimasu
-  ansible.builtin.copy:
-    src: /etc/rancher/k3s/k3s.yaml
-    dest: /home/zimasu/.kube/config
-    owner: zimasu
-    group: zimasu
-    mode: '0600'
-    remote_src: true
-  become: true
