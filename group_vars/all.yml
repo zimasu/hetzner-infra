@@ -1,0 +1,2 @@
+zimasu_ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMA5HFV6+c3WfcUE8iVCy325x1x1rRsI4qNyFLGH9Y2k zimasu.pro@gmail.com"
+ansible_ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMA5HFV6+c3WfcUE8iVCy325x1x1rRsI4qNyFLGH9Y2k zimasu.pro@gmail.com"

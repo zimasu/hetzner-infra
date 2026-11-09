@@ -1,6 +1,21 @@
-- hosts: k3s
-  become: false
+---
+- name: Base setup
+  hosts: k3s_new
+  become: true
+  tags: base
   roles:
     - base
+
+- name: k3s install
+  hosts: k3s_new
+  become: true
+  tags: k3s
+  roles:
     - k3s
+
+- name: ArgoCD install
+  hosts: k3s_new
+  become: true
+  tags: argocd
+  roles:
     - argocd

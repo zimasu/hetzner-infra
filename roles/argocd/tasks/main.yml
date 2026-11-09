@@ -3,19 +3,15 @@
   command: kubectl create namespace argocd
   register: ns_result
   failed_when: ns_result.rc != 0 and 'already exists' not in ns_result.stderr
+  changed_when: ns_result.rc == 0
 
-- name: Apply ArgoCD install manifest
-  command: kubectl apply --server-side --force-conflicts -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.13.3/manifests/install.yaml
+- name: Install ArgoCD
+  command: >
+    kubectl apply -n argocd
+    -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.12.6/manifests/install.yaml
+  register: argocd_result
+  changed_when: "'configured' in argocd_result.stdout or 'created' in argocd_result.stdout"
 
 - name: Wait for ArgoCD server to be ready
-  command: kubectl rollout status deployment/argocd-server -n argocd --timeout=120s
-
-- name: Apply ArgoCD ingress
-  template:
-    src: argocd-ingress.yml.j2
-    dest: /tmp/argocd-ingress.yml
-
-- name: Deploy ArgoCD ingress
-  command: kubectl apply -f /tmp/argocd-ingress.yml
-
-
+  command: kubectl rollout status deployment/argocd-server -n argocd --timeout=300s
+  changed_when: false
