@@ -1,4 +1,0 @@
-domain: noco.zidanesyukri.me
-db:
-  user: nocodb
-  secretName: noco-secrets
