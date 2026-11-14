@@ -6,12 +6,15 @@ Covers OS hardening, k3s install and ArgoCD bootstrap.
 
 ![CI](https://github.com/zimasu/hetzner-infra/actions/workflows/ansible.yml/badge.svg)
 
-# First time: run as root to create ansible user
+### First time: run as root to create ansible user
+```
 ansible-playbook bootstrap.yml
+```
 
-# Then provision everything
+### Then provision everything
+```
 ansible-playbook site.yml
-
+```
 ## Usage
 
 ```bash
