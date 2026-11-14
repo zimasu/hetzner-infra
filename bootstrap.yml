@@ -1,0 +1,21 @@
+---
+- name: Bootstrap ansible user
+  hosts: k3s_new
+  remote_user: root
+  tasks:
+    - name: Create ansible user
+      ansible.builtin.user:
+        name: ansible
+        shell: /bin/bash
+        create_home: yes
+
+    - name: Add public key
+      ansible.posix.authorized_key:
+        user: ansible
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+    - name: Give passwordless sudo
+      ansible.builtin.lineinfile:
+        path: /etc/sudoers
+        line: 'ansible ALL=(ALL) NOPASSWD: ALL'
+        validate: 'visudo -cf %s'
