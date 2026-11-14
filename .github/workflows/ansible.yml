@@ -34,7 +34,7 @@ jobs:
 
       - name: Add aksara to known_hosts
         run: |
-          ssh-keyscan -H 62.238.100.84 >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.AKSARA_HOST }} >> ~/.ssh/known_hosts
 
       - name: Run playbook
         run: |
